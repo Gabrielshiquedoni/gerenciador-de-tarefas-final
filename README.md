@@ -9,7 +9,7 @@ Interface limpa e responsiva, com feedback visual imediato do status das tarefas
 
 | **Dashboard (Desktop)** | **Edição & Status** |
 |:---:|:---:|
-| <img src="prints/dashboard.jpeg" alt="Dashboard de Tarefas" width="400"> | <img src="prints/modal.jpeg" alt="Modal de Edição" width="400"> |
+| <img src="Prints/dashboard.jpeg" alt="Dashboard de Tarefas" width="400"> | <img src="Prints/modal.jpeg" alt="Modal de Edição" width="400"> |
 
 ---
 
