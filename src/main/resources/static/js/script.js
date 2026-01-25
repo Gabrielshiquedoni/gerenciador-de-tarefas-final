@@ -31,11 +31,25 @@ function criarCardTarefa(tarefa) {
     const tagAtrasada = checkAtrasada(tarefa.dataTermino);
     const isAtrasadaClass = tarefa.dataTermino < new Date().toISOString().split('T')[0] ? 'atrasada' : '';
     
+    let statusClass = '';
+    let statusTexto = 'Pendente'; 
+    
+    if (tarefa.status === 'CONCLUIDA') {
+        statusClass = 'status-concluida'; 
+        statusTexto = '✅ Concluída';
+    } else if (tarefa.status === 'EM_ANDAMENTO') {
+        statusClass = 'status-andamento';
+        statusTexto = '⏳ Em Andamento';
+    }
+
     return `
-        <div class="task-card ${isAtrasadaClass}" data-id="${tarefa.id}">
-            <h3>${tarefa.titulo} ${tagAtrasada}</h3>
+        <div class="task-card ${isAtrasadaClass} ${statusClass}" data-id="${tarefa.id}">
+            <h3>
+                ${tarefa.titulo} ${tagAtrasada}
+                <span class="badge-status">${statusTexto}</span>
+            </h3>
             <p><strong>Responsável:</strong> ${tarefa.responsavel}</p>
-            <p><strong>Data de término:</strong> ${dataBR}</p>
+            <p><strong>Vencimento:</strong> ${dataBR}</p>
             <p>${tarefa.detalhamento || 'Sem detalhamento.'}</p>
             <div class="task-actions" style="margin-top: 15px;">
                 <button class="alterar-btn" data-id="${tarefa.id}">Alterar</button>
@@ -117,6 +131,11 @@ async function abrirModalAlteracao(id) {
         document.getElementById('dataTermino').value = tarefa.dataTermino;
         document.getElementById('detalhamento').value = tarefa.detalhamento;
 
+        const statusSelect = document.getElementById('status');
+        if (statusSelect && tarefa.status) {
+            statusSelect.value = tarefa.status;
+        }
+
         MODAL_TITLE.textContent = `Alterar Tarefa - ID ${tarefa.id}`;
         MODAL.style.display = 'flex';
 
@@ -130,11 +149,16 @@ TAREFA_FORM.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const id = document.getElementById('tarefa-id').value;
+    
+    const statusSelect = document.getElementById('status');
+    const statusValor = statusSelect ? statusSelect.value : null;
+
     const data = {
         titulo: document.getElementById('titulo').value,
         responsavel: document.getElementById('responsavel').value,
         dataTermino: document.getElementById('dataTermino').value,
-        detalhamento: document.getElementById('detalhamento').value
+        detalhamento: document.getElementById('detalhamento').value,
+        status: statusValor 
     };
 
     const isUpdate = id !== '';
@@ -178,10 +202,11 @@ function adicionarEventListeners() {
         button.onclick = (e) => {
             const id = e.target.getAttribute('data-id');
             const card = e.target.closest('.task-card');
-            const tituloText = card ? card.querySelector('h3').textContent : `ID ${id}`;
-            const titulo = tituloText.replace('ATRASADA', '').trim();
             
-            abrirModalConfirmacao(id, titulo);
+            let tituloText = card ? card.querySelector('h3').innerText : `ID ${id}`;
+            tituloText = tituloText.replace('ATRASADA', '').replace('✅ Concluída', '').replace('⏳ Em Andamento', '').replace('Pendente', '').trim();
+            
+            abrirModalConfirmacao(id, tituloText);
         };
     });
     
@@ -200,6 +225,8 @@ ADD_TAREFA_BTN.onclick = () => {
     MODAL_TITLE.textContent = 'Incluir Nova Tarefa';
     TAREFA_FORM.reset(); 
     document.getElementById('tarefa-id').value = ''; 
+    // Reseta o status para o padrão (Pendente)
+    if(document.getElementById('status')) document.getElementById('status').value = 'PENDENTE';
     MODAL.style.display = 'flex';
 };
 

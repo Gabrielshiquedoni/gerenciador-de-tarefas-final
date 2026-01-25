@@ -293,3 +293,20 @@ tbody tr:hover {
     width: 100%;
     font-size: 0.8rem;
 }
+/* Cores para os status */
+.task-card.status-concluida {
+    border-left: 5px solid #28a745; /* Verde */
+    background-color: #f0fff4;
+}
+
+.task-card.status-andamento {
+    border-left: 5px solid #ffc107; /* Amarelo */
+}
+
+.badge-status {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #eee;
+    float: right;
+}

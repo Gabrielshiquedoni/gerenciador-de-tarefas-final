@@ -1,9 +1,7 @@
 package com.projetofinal.gerenciador_de_tarefas_final.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.projetofinal.gerenciador_de_tarefas_final.enums.StatusTarefa;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -30,8 +28,12 @@ public class Tarefa {
 
     private String detalhamento;
 
+    @Enumerated(EnumType.STRING)
+    private StatusTarefa status = StatusTarefa.PENDENTE;
     public Tarefa() {
     }
+
+    // --- GETTERS E SETTERS ---
 
     public Long getId() {
         return id;
@@ -71,5 +73,13 @@ public class Tarefa {
 
     public void setDetalhamento(String detalhamento) {
         this.detalhamento = detalhamento;
+    }
+
+    public StatusTarefa getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusTarefa status) {
+        this.status = status;
     }
 }
