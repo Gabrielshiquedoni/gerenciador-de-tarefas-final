@@ -41,7 +41,7 @@ Este não é apenas um CRUD simples. O projeto foi estruturado seguindo padrões
 * 📱 **100% Responsivo:** Layout adaptável para desktop e mobile.
 
 ## 🔧 Como executar
-1.  **Clone o repositório:** `git clone [LINK-DO-SEU-REPO-AQUI]`
+1.  **Clone o repositório:** `git clone https://github.com/Gabrielshiquedoni/gerenciador-de-tarefas-final.git`
 2.  **Rode o Back-end:** Execute a classe `GerenciadorDeTarefasFinalApplication.java`.
 3.  **Acesse:** Abra `http://localhost:8080` no seu navegador.
 
